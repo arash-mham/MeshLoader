@@ -456,12 +456,12 @@ while( true ){
 	{
 		glm::vec3 vertex;
 		glm::vec3 normal(0,0,0);
-		glm::vec3 color(1,1,1);
+		
 		fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z );
 		
 		v.setPosition(vertex);
 		v.setNormal(glm::normalize(vertex));
-		v.setColor(color);
+		v.setColor(randomColor());
 		vertex_list.push_back(v);
 	}
 	/*else if ( strcmp( lineHeader, "vn" ) == 0 )
