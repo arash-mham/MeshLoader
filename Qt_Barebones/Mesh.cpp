@@ -1,7 +1,6 @@
 #include "Mesh.h"
-using namespace glm;
 #define NUM_ARRAY_ELEMENTS(a) sizeof(a)/sizeof(*a)
-
+using namespace glm;
 
 glm::vec3 randomColor()
 {
@@ -313,7 +312,16 @@ void Mesh::deleteMemory()
 
 }
 
+float angle(glm::vec3 v0,glm::vec3 v1,glm::vec3 v2)
+{
+	float a=(glm::acos(glm::dot(v1-v0,v2-v0)/(glm::length(v1-v0)*glm::length(v2-v0))));
 
+	return a;
+}
+glm::vec3 Normal(glm::vec3 v0,glm::vec3 v1,glm::vec3 v2)
+{
+	return (glm::normalize(glm::cross(v1-v0,v2-v0)));
+}
 
 Vertex* Mesh::returnVertices()
 {
@@ -335,7 +343,7 @@ Mesh Mesh::makePlaneVerts(uint dimensions)
 		{
 			Vertex& thisVert = ret.vertices[i * dimensions + j];
 			thisVert.setPosition(vec3(j - half, 0, i - half));
-			thisVert.setColor(randomColor());
+			thisVert.setColor(vec3(1,1,1));
 			thisVert.setNormal(vec3(0,1,0));
 		}
 	}
@@ -484,6 +492,17 @@ while( true ){
 	
 
 }
+std::vector <glm::vec3> normal;
+std::vector <glm::vec3> color;
+findColorandNormal(vertex_list,index_list,normal,color);
+for(int i=0;i<vertex_list.size();i++)
+{
+	vertex_list[i].setColor(color[i]);
+	vertex_list[i].setNormal(normal[i]);
+}
+
+
+
 Vertex* stackVerts;
 	stackVerts=new Vertex[vertex_list.size()];
 	for(int i=0;i<vertex_list.size();i++)
@@ -506,5 +525,48 @@ Vertex* stackVerts;
 	//delete[]stackIndices;
 
 	return ret;
+}
+
+
+void Mesh::findColorandNormal(std::vector<Vertex> vertex_List,std::vector <unsigned short > index_list, std::vector <glm::vec3>& normal,std::vector <glm::vec3>& color)
+{
+	std::vector<int> count;
+	//make the sizes equal to each other
+	for(int i=0;i<vertex_List.size();i++)
+	{
+		glm::vec3 n(0,0,0);
+		glm::vec3 c(0,0,0);
+		normal.push_back(n);
+		color.push_back(c);
+		count.push_back(0);
+	}
+
+	for(int i=0;i<index_list.size();i+=3)
+	{
+		int x0=index_list[i]-1;
+		int x1=index_list[i+1]-1;
+		int x2=index_list[i+2]-1;
+		glm::vec3 white(1,1,1);
+		count[x0]++;
+		count[x1]++;
+		count[x2]++;
+		
+		normal[x0]+=Normal(vertex_List[x0].getPosition(),vertex_List[x1].getPosition(),vertex_List[x2].getPosition());
+		color[x0]+=white*angle(vertex_List[x0].getPosition(),vertex_List[x1].getPosition(),vertex_List[x2].getPosition());
+
+		normal[x1]+=Normal(vertex_List[x1].getPosition(),vertex_List[x2].getPosition(),vertex_List[x0].getPosition());
+		color[x1]+=white*angle(vertex_List[x1].getPosition(),vertex_List[x2].getPosition(),vertex_List[x0].getPosition());
+
+		normal[x2]+=Normal(vertex_List[x2].getPosition(),vertex_List[x0].getPosition(),vertex_List[x1].getPosition());
+		color[x2]+=white*angle(vertex_List[x2].getPosition(),vertex_List[x0].getPosition(),vertex_List[x1].getPosition());
+
+	}
+	for(int i=0;i<normal.size();i++)
+	{
+		float x=2*(6.3-color[i].x);
+		normal[i]=glm::normalize(glm::vec3(normal[i].x/count[i],normal[i].y/count[i],normal[i].z/count[i]));
+		color[i]=x*glm::vec3(1,0,0)+(1-x)*glm::vec3(0,1,0);
+	}
+	
 }
 

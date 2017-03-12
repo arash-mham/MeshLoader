@@ -60,6 +60,8 @@ private:
 	GLuint numVertices;
 	GLushort* indices;
 	GLuint numIndices;
+	void findColorandNormal(std::vector<Vertex> vertex_List,std::vector <unsigned short > index_list, std::vector <glm::vec3>& normal,std::vector <glm::vec3>& color);
+
 	
 };
 

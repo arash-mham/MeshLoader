@@ -23,6 +23,7 @@ void main(){
         vec3 specularLight=vec3(specularity,specularity,specularity);
         
        vec3 color=fragmentColor*ambientLight+fragmentColor*clamp(diffuseLight,0,1)+fragmentColor*clamp(specularLight,0,1);
+   
 
        outColor = vec4(color, 1.0);
 }

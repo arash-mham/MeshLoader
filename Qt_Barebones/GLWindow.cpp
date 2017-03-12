@@ -80,7 +80,7 @@ bool GLWindow::checkShaderLinkerStatus(GLuint PorgramID)
 }
 void GLWindow::sendData()
 {
-	Mesh cube=cube.objLoader("C:/Users/amahdavi/Desktop/shark.obj");
+	Mesh cube=cube.objLoader("C:/Users/amahdavi/Desktop/bunny.obj");
 	//Mesh cube=cube.makeCube();
 	Mesh plane = plane.makePlane();
 	GLsizeiptr totalSize = 0;
@@ -192,6 +192,8 @@ void GLWindow::initializeGL()//only runs once
 }
 void GLWindow::setUpUniforms()//only runs once
 {
+	camera.setPosition(vec3(-8.38156891, 1.75641787, -0.0218772162));
+	camera.setViewDirection(vec3(1.43220007, 0.0617065318, -0.0864367485));
 
 	GLint ambientLightUniformLocation = glGetUniformLocation(programID, "ambientLight");
 	glUniform3f(ambientLightUniformLocation, L.getAmbient().r, L.getAmbient().g, L.getAmbient().b);
@@ -223,20 +225,20 @@ void GLWindow::paintGL()//runs repetitively
 	// Cube
 	glBindVertexArray(VertexArrayObjectID[0]);
 	mat4 cube1ModelToWorldMatrix =
-		glm::translate(vec3(-1.0f, 0.0f, -3.0f)) *
-		glm::rotate(glm::radians(65.0f), vec3(1.0f, 0.0f, 0.0f));
+		glm::translate(vec3(-1.0f,-0.5f, 0.0f)) *
+		glm::rotate(glm::radians(0.0f), vec3(1.0f, 0.0f, 0.0f));
 	mvpMatrix = worldToProjectionMatrix * cube1ModelToWorldMatrix;
 	glUniformMatrix4fv(mvpUniformLocation, 1, GL_FALSE, &mvpMatrix[0][0]);
 	glDrawElements(GL_TRIANGLES, mesh_list[0].get_numIndices(), GL_UNSIGNED_SHORT, (void*)mesh_list[0].vertexBufferSize());
 	glUniformMatrix4fv(modeltoWorldTransformation, 1, GL_FALSE, &cube1ModelToWorldMatrix[0][0]);
 
-	mat4 cube2ModelToWorldMatrix =
+	/*mat4 cube2ModelToWorldMatrix =
 		glm::translate(vec3(3.0f, 0.0f, -1.75f)) *
 		glm::rotate(glm::radians(45.0f), vec3(0.0f, 1.0f, 0.0f));
 	mvpMatrix = worldToProjectionMatrix * cube2ModelToWorldMatrix;
 	glUniformMatrix4fv(mvpUniformLocation, 1, GL_FALSE, &mvpMatrix[0][0]);
 	glDrawElements(GL_TRIANGLES, mesh_list[0].get_numIndices(), GL_UNSIGNED_SHORT, (void*)mesh_list[0].vertexBufferSize());
-	glUniformMatrix4fv(modeltoWorldTransformation, 1, GL_FALSE, &cube2ModelToWorldMatrix[0][0]);
+	glUniformMatrix4fv(modeltoWorldTransformation, 1, GL_FALSE, &cube2ModelToWorldMatrix[0][0]);*/
 	// Arrow
 	glBindVertexArray(VertexArrayObjectID[1]);
 	mat4 arrowModelToWorldMatrix = glm::translate(vec3(0.0f, -2.0f, 0.0f));
