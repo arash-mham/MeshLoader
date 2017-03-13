@@ -20,8 +20,8 @@ Widget::Widget()
 	controlsLayout->addLayout(slidersLayout = new QHBoxLayout);
 	slidersLayout->addWidget(slider=new CustomedSlider);
 	connect(slider, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged()));
-	slidersLayout->addWidget(slider2 = new CustomedSlider);
-	connect(slider2, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged2()));
+	//slidersLayout->addWidget(slider2 = new CustomedSlider);
+	//connect(slider2, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged2()));
 	
 }
 
@@ -31,15 +31,16 @@ Widget::~Widget()
 }
 void Widget::sliderValueChanged()
 {
-	glWindow->cameraMoveSlider();
+	int x=slider->value();
+	glWindow->changeColor(1.0f+(float)(x/5.0f));
 	glWindow->repaint();
 	
 }
 void Widget::sliderValueChanged2()
 {
-	int x;
+	/*int x;
 	x = slider2->value();
 	glWindow->cameraMoveSlider();
-	glWindow->repaint();
+	glWindow->repaint();*/
 
 }

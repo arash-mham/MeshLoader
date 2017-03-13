@@ -12,6 +12,7 @@ glm::vec3 randomColor()
 }
 Mesh::Mesh()
 {
+	alpha=1;
 }
 
 
@@ -439,6 +440,7 @@ Mesh Mesh::makePlane(uint dimensions)
 
 Mesh Mesh::objLoader(const char * path)
 {
+	alpha=2;
 	Mesh ret;
 	//This obj loader does only suppports pure vertex and face vertices
 	std::vector < Vertex > vertex_list;
@@ -563,7 +565,7 @@ void Mesh::findColorandNormal(std::vector<Vertex> vertex_List,std::vector <unsig
 	}
 	for(int i=0;i<normal.size();i++)
 	{
-		float x=2*(6.3-color[i].x);
+		float x=alpha*(6.3-color[i].x);
 		normal[i]=glm::normalize(glm::vec3(normal[i].x/count[i],normal[i].y/count[i],normal[i].z/count[i]));
 		color[i]=x*glm::vec3(1,0,0)+(1-x)*glm::vec3(0,1,0);
 	}

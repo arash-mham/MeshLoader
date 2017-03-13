@@ -19,6 +19,10 @@ void Vertex::setColor(vec3 col)
 {
 	color = col;
 }
+vec3 Vertex::getColor()
+{
+	return color;
+}
 void Vertex::setNormal(vec3 nor)
 {
 	normal = nor;

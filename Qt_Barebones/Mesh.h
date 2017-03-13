@@ -54,12 +54,15 @@ public:
 	Mesh makePlaneIndices(GLuint dimensions);
 	Mesh makePlaneVerts(GLuint dimensions);
 	Mesh objLoader(const char * path);
+	float getAlpha(){return alpha;}
+	void setAlpha(float _alpha){ alpha=_alpha;}
 	
 private:
 	Vertex* vertices;
 	GLuint numVertices;
 	GLushort* indices;
 	GLuint numIndices;
+	float alpha;
 	void findColorandNormal(std::vector<Vertex> vertex_List,std::vector <unsigned short > index_list, std::vector <glm::vec3>& normal,std::vector <glm::vec3>& color);
 
 	

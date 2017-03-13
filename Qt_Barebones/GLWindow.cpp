@@ -80,12 +80,12 @@ bool GLWindow::checkShaderLinkerStatus(GLuint PorgramID)
 }
 void GLWindow::sendData()
 {
-	Mesh cube=cube.objLoader("C:/Users/amahdavi/Desktop/bunny.obj");
+	Mesh objMesh=objMesh.objLoader("C:/Users/amahdavi/Desktop/bunny.obj");
 	//Mesh cube=cube.makeCube();
 	Mesh plane = plane.makePlane();
 	GLsizeiptr totalSize = 0;
 	GLsizeiptr currenetOffset = 0;
-	mesh_list.push_back(cube);
+	mesh_list.push_back(objMesh);
 	mesh_list.push_back(plane);
 
 	glGenBuffers(1, &BufferID);
@@ -203,6 +203,10 @@ void GLWindow::setUpUniforms()//only runs once
 	mvpUniformLocation = glGetUniformLocation(programID, "mvpMatrix");
 	modeltoWorldTransformation = glGetUniformLocation(programID, "modelToWorldTransformationMatrix");
 
+
+	GLfloat alphaLoacation=glGetUniformLocation(programID, "alpha");
+	glUniform1f(alphaLoacation, 1.0f);
+	
 	
 
 }
@@ -285,5 +289,11 @@ void GLWindow::keyPressEvent(QKeyEvent* e)
 void GLWindow::cameraMoveSlider()
 {
 	camera.setPosition(vec3(camera.getPosition().x, camera.getPosition().y+0.1, camera.getPosition().z));
+}
+void GLWindow::changeColor(float alpha)
+{
+	GLfloat alphaLoacation=glGetUniformLocation(programID, "alpha");
+	glUniform1f(alphaLoacation, alpha);
+	
 }
 

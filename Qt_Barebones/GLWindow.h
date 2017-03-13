@@ -19,6 +19,7 @@ public:
 	void sendData();
 	void installShaders();
 	void cameraMoveSlider();
+	void changeColor(float alpha);
 	
 };
 

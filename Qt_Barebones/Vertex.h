@@ -10,6 +10,7 @@ public:
 	void setPosition(vec3 pos);
 	vec3 getPosition(){return position;}
 	void setColor(vec3 col);
+	vec3 getColor();
 	void setNormal(vec3 nor);
 	Vertex operator +(const Vertex& v);
 	Vertex operator -(const Vertex& v);
